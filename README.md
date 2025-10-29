@@ -10,8 +10,8 @@ The application is a fully functional product management dashboard built with Ne
 
 ### Prerequisites
 
-- Node.js 18+
-- pnpm (install with `npm install -g pnpm`)
+- Node.js 18+ and npm (comes with Node.js)
+  - Don't have Node.js? [Download it here](https://nodejs.org/)
 
 ### Installation
 
@@ -21,16 +21,16 @@ git clone <repo-url>
 cd fullstack-interview
 
 # Install dependencies
-pnpm install
+npm install
 
 # Set up the database
-pnpm db:push
+npm run db:push
 
 # Seed with 200,000 products (takes ~20-30 seconds)
-pnpm db:seed
+npm run db:seed
 
 # Start the development server
-pnpm dev
+npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) in your browser.
@@ -38,7 +38,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 ### Quick Setup (One Command)
 
 ```bash
-pnpm setup
+npm run setup
 ```
 
 This runs `install`, `db:push`, and `db:seed` in sequence.
@@ -61,7 +61,7 @@ The interviewer will guide you through different scenarios during the session.
 - **Data Fetching:** React Query (TanStack Query)
 - **Backend:** Next.js API routes
 - **Database:** Prisma ORM + SQLite (200k products)
-- **Package Manager:** pnpm
+- **Package Manager:** npm
 
 ## 📁 Project Structure
 
@@ -165,17 +165,17 @@ prisma/
 ## 🔧 Available Scripts
 
 ```bash
-pnpm dev          # Start development server
-pnpm build        # Build for production
-pnpm start        # Start production server
-pnpm lint         # Run ESLint
+npm run dev          # Start development server
+npm run build        # Build for production
+npm run start        # Start production server
+npm run lint         # Run ESLint
 
-pnpm db:generate  # Generate Prisma client
-pnpm db:push      # Push schema to database
-pnpm db:seed      # Seed database with test data
-pnpm db:reset     # Reset database and reseed
+npm run db:generate  # Generate Prisma client
+npm run db:push      # Push schema to database
+npm run db:seed      # Seed database with test data
+npm run db:reset     # Reset database and reseed
 
-pnpm setup        # Complete setup (install + db:push + db:seed)
+npm run setup        # Complete setup (install + db:push + db:seed)
 ```
 
 ## 📝 Notes
