@@ -113,7 +113,8 @@ prisma/
 
 **GET** `/api/products/search?q=query`
 
-- Returns: Products matching search across multiple fields
+- Query params: `q`, `category`, `brand`
+- Returns: `{ products }`, up to 50 products (with brand and category) matching the search across multiple fields
 
 ### Cart
 
@@ -150,7 +151,7 @@ prisma/
 ### Product Catalog
 
 - Browse 200,000 products with pagination (50 per page)
-- Search products by name
+- Search products by name, description, brand, category, attributes, supplier, and reviews
 - Filter by category and brand
 - Add products to cart
 - Export products to CSV
@@ -198,9 +199,9 @@ npm run setup        # Complete setup (install + db:push + db:seed)
 
 - Computing the count is slow
 - Search feels laggy when typing - users report the page is unresponsive while searching (focus only on frontend part)
+- Users who open their cart, go back to products, and return to the cart are told their cart is empty, even though it isn't
 - Shopping cart page feels sluggish when updating item quantities
-- Product listing page is slow to fully load - users see a long delay before all product information appears
-- Even once some products load, the images are not loading for a while.
+- Product listing page is slow to fully load - products appear a few at a time, and their images take even longer to show up
 - CSV export causes browser to hang for 10+ seconds with our full catalog
 - Even after search improvement to the frontend, search is still slow.
 

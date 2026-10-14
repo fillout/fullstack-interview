@@ -22,6 +22,10 @@ interface ProductsResponse {
   totalPages: number;
 }
 
+interface SearchResponse {
+  products: ProductWithRelations[];
+}
+
 interface FiltersResponse {
   brands: Brand[];
   categories: Category[];
@@ -54,12 +58,11 @@ export default function ProductsPage() {
   // Fetch products
   const { data, isLoading } = useQuery<ProductsResponse>({
     //These are the keys that will trigger a re-fetch
-    queryKey: ['products', page, search, selectedCategory, selectedBrand],
+    queryKey: ['products', page, selectedCategory, selectedBrand],
     queryFn: async () => {
       const params = new URLSearchParams({
         page: page.toString(),
         limit: '50',
-        ...(search && { search }),
         ...(selectedCategory && { category: selectedCategory }),
         ...(selectedBrand && { brand: selectedBrand }),
       });
@@ -67,6 +70,23 @@ export default function ProductsPage() {
       const response = await fetch(`/api/products?${params}`);
       return response.json();
     },
+    enabled: !search,
+  });
+
+  // Search products
+  const { data: searchData, isLoading: isSearchLoading } = useQuery<SearchResponse>({
+    queryKey: ['products-search', search, selectedCategory, selectedBrand],
+    queryFn: async () => {
+      const params = new URLSearchParams({
+        q: search,
+        ...(selectedCategory && { category: selectedCategory }),
+        ...(selectedBrand && { brand: selectedBrand }),
+      });
+
+      const response = await fetch(`/api/products/search?${params}`);
+      return response.json();
+    },
+    enabled: !!search,
   });
 
   const handleAddToCart = async (productId: string) => {
@@ -117,12 +137,12 @@ export default function ProductsPage() {
         {/* Main Content */}
         <div className="flex-1">
           <ProductGrid
-            products={data?.products || []}
-            loading={isLoading}
+            products={(search ? searchData?.products : data?.products) || []}
+            loading={search ? isSearchLoading : isLoading}
             onAddToCart={handleAddToCart}
           />
 
-          {data && data.totalPages > 1 && (
+          {!search && data && data.totalPages > 1 && (
             <Pagination
               currentPage={page}
               totalPages={data.totalPages}
